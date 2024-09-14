@@ -1,0 +1,137 @@
+---
+title: "Homework 2"
+output: 
+  html_document:
+    self_contained: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=T,eval=T,message=F,warning=F,fig.align='center')
+library(tidyverse)
+source("../scripts/ggprob.R")
+```
+
+
+## Problem 1 <small>(2pts each, 8pts total)</small>
+
+Here are a few probability exercises to get you warmed up.
+
+a. Consider $X\sim \text{Normal}(5, 2^2)$. Find $P(4 < X < 7)$
+```{r}
+m = 5
+sd = 2
+
+ggplot() + geom_norm_density(mu=m, sigma=sd, color = "black") + 
+  geom_norm_fill(m, sd, a=4, b=7, fill = "red", alpha = 0.5)
+
+pnorm(7, m, sd) - pnorm(4, m, sd)
+
+```
+**Answer**: $P(4 < X < 7) = 0.5328072$ 
+
+b. Suppose you have an uneven 6-sided die where the even numbers are equally likely to occur and the odd numbers are also equally likely. The expected value of the die is $3.3333$ (i.e. $\frac{10}{3})$. What is the probability of getting a 6?
+   (Hint: Let $p$ represent the probability of getting an even number, and represent the probability of the other numbers algebraically. Then derive an expression for the expected value, let it equal $\frac{10}{3}$, and solve. You can go back and check your work by plugging the result back into your original expressions and verify it works with R.)
+   
+```{r}
+mu = 10/3
+
+
+```
+
+**Answer**: The probability of getting a $6$ is $\frac{1}{9}$.
+
+c. Give **two examples** of pairs of events that are mutually exclusive and explain why for each.
+
+**Answer**: 
+
+1. Say you are flipping a coin once. Let A be the event of observing a Head and B be the event of observing a Tail. A and B are mutually exclusive because their intersection is the empty set. This is because with one coin flip it is not possible to observe both a Head and a Tail, only one or the other can occur.  
+2. Suppose you roll a six sided fair die once. Let C be the event that you observe an even number and D be the event that you observe an odd number. C and D are mutually exclusive events because a number can only be even or odd, not both. Thus, C intersection D is the empty set.
+
+d. Give **two examples** of pairs of events that are independent and explain why for each.
+**Answer**: 
+
+1. 
+
+## Problem 2 <small>(2pts each, 14pts total)</small>
+
+For each of the following scenarios, decide what random variable may be appropriate to use as a model, and explain your reasoning as well as any assumptions you make.
+
+a. The number of patients in an experimental drug trial that respond to treatment. 
+
+**Answer**: I think a Binomial RV would be appropriate to use to model this situation. As for the parameters, n would be the number of patients that the trial is administers to, and p would be the probability that a trial is a success (aka that a patient responds to treatment). To satisfy the BINS assumptions we must assume the following: that each trial corresponds to a patient that hasn't before done the treatment, the outcomes are binary (B: either a patient responds to treatment or they don't), each trial is independent of the others (I: one patient's response doesn't impact another patient's), there are a fixed number of trials (N), and each patient has the same probability of responding to treatment (S).  
+
+b. The number of red cars you observe driving through an intersection between 10am and 11am. 
+
+**Answer**: I think a Poisson RV would be appropriate to model this situation. For this model to work we must make the assumption that there exists a positive, real number called lambda that represents average rate of red cars that one observes driving through a specific intersection between 10 and 11am.  
+
+c. What the second hand reads on the clock when you wake up from a long nap (approximately). 
+
+**Answer**: I think a Discrete Uniform RV would be good to model this situation. The second hand reads the minute past the hour on a clock. Thus, this RV models approximately what minute after the hour it is after you wake up from a long nap. There are exactly 60 minutes in an hour, and a clock's second hand doesn't accurately represent any unit of time smaller than a minute. Thus, our possible outcomes are the integers between 0 and 59, inclusive. So if using a discrete uniform RV, the parameters a and b would be 0 and 59 respectively. We must make the assumption that if you wake up and the second hand is not exactly on a minute marker, then you must round to the nearest whole minute. This model should work because each minute has the same constant probability of occurring, that is 1/60.  
+
+
+d. How many people you need to swipe right on Tinder before you get a match. 
+
+**Answer**: Geometric
+
+e. The length of time between mosquito bites a camper experiences while on a hike. 
+
+**Answer**: Exponential
+
+f. Whether the Eagles win the Superbowl this year. 
+
+**Answer**: Bernoulli
+
+g. The GPA of a randomly selected UW-Madison graduate.
+
+**Answer**: Uniform (Continuous)
+
+
+## Problem 3 <small>(2pts each, 4pts total)</small>
+
+a. Consider the CDF given below for random variable $Y$ 
+```{r}
+plot(x=0:6, y=c(0,.3,.5, .6, .75,.8,1), type="s", ylab="F(y)", xlab="y", main="cdf of Y")
+abline(h=seq(.1,.9,.1), lty=2, col="gray")
+```
+Express the pmf of $Y$ in the following R code (in other words, fill in the missing probabilities)
+
+```{r}
+y<- 1:6
+py <- c(0.3,0.2,0.1,0.15,0.05, 0.2) ## edit this line
+barplot(height=py, names=y, main="pmf of Y")
+```
+
+
+
+b. Calculate $E[Y]$ for the variable $Y$ in part a.
+
+```{r}
+expected_value = sum(y * py)
+expected_value
+```
+**Answer**: $E[Y] = 3.05$.
+
+
+## Problem 4 <small>(2pts each, 4pts total)</small>
+
+Below you will find the plot of a probability density function for a random variable $X$.
+
+```{r, echo=FALSE}
+plot(x=c(0,1,2,3), y=c(0,.5,.5,0), type="l", ylab="density", xlab="x", main="pdf of X")
+```
+
+Using just geometry answer a and b:
+
+a. What is $Pr[X < 1]$?
+
+**Answer**: $Pr[X < 1] = 0.25$ 
+
+b. What is $Pr[1.5 < X < 2.5]$
+```{r}
+7/16
+```
+
+
+**Answer**: $Pr[1.5 < X < 2.5] = 0.4375$
+
+
