@@ -4,6 +4,12 @@ output:
   html_document:
     self_contained: yes
 ---
+---
+title: "Homework 2"
+output: 
+  html_document:
+    self_contained: yes
+---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=T,eval=T,message=F,warning=F,fig.align='center')
@@ -31,14 +37,11 @@ pnorm(7, m, sd) - pnorm(4, m, sd)
 
 b. Suppose you have an uneven 6-sided die where the even numbers are equally likely to occur and the odd numbers are also equally likely. The expected value of the die is $3.3333$ (i.e. $\frac{10}{3})$. What is the probability of getting a 6?
    (Hint: Let $p$ represent the probability of getting an even number, and represent the probability of the other numbers algebraically. Then derive an expression for the expected value, let it equal $\frac{10}{3}$, and solve. You can go back and check your work by plugging the result back into your original expressions and verify it works with R.)
-   
-```{r}
-mu = 10/3
-
-
-```
 
 **Answer**: The probability of getting a $6$ is $\frac{1}{9}$.
+
+**My work**: Let $X$ be a random variable that can take on values $\{1, 2, 3, 4, 5, 6\}$ via the random process of a die roll. Let $p$ represent the probability of getting an even number. Because we are given that the even numbers are equally likely to occur, and there are only 3 options for even numbers, we know that $P(2)=P(4)=P(6) = \frac{p}{3}$. Let $o$ represent the probability of getting an odd number. By the same reasoning, we know that $P(1)=P(3)=P(5)=\frac{o}{3}$. We know that all probabilities must add up to one. Thus we know $p + o = 1$. Now we must use the general formula for the expected value: $\sum_{i=1}^{6}x_i *P(X=x_i)$ where $x_1 = 1$, $x_2 = 2$, etc. Expanding this summation and combining like terms gives us $9o + 12p = 10$. Now we have two linear equations involving $o$ and $p$. When we solve, we get that $p = \frac{1}{3}$. We want to find $P(6)$. So we get $P(6) = \frac{p}{3} = \frac{\frac{1}{3}}{3} = \frac{1}{9}$. 
+
 
 c. Give **two examples** of pairs of events that are mutually exclusive and explain why for each.
 
@@ -48,9 +51,11 @@ c. Give **two examples** of pairs of events that are mutually exclusive and expl
 2. Suppose you roll a six sided fair die once. Let C be the event that you observe an even number and D be the event that you observe an odd number. C and D are mutually exclusive events because a number can only be even or odd, not both. Thus, C intersection D is the empty set.
 
 d. Give **two examples** of pairs of events that are independent and explain why for each.
+
 **Answer**: 
 
-1. 
+1. Say you roll a fair six sided dice twice. Let A be the event that you observe an even number on the first roll and B be the event that you observe an odd number on the second roll. $P(A) = 0.5$ and $P(B) = 0.5$. $A \cap B$ is the even that you get an even number on the first roll **and** an odd number on the second roll. The outcome space of rolling the dice twice is $\{EE, EO, OE, OO\}$. Thus $P(A \cap B) = \frac{1}{4}$. Because $P(A \cap B) = P(A) * P(B)$ ($0.25 = 0.5 * 0.5$), A and B are independent events. More generally this means that A and B are events that occur without being impacted by each other. 
+2. Say there is a hat that has 20 scraps of paper in it, each with an integer between 1 and 20 written on it. Suppose you draw one scrap from the hat. Let C be the event that the number on the paper is divisible by 5. That is, $C = \{5, 10,15,20\}$. Let D be the event that the number is odd. That is, $D = \{1,3,5,7,9,11,13,15,17,19\}$. Since there are 20 overall possible outcomes, $P(C) = \frac{1}{5}$ and $P(D) = \frac{1}{2}$. Now we must investigate the event $C \cap D$, which is the event that the number is both divisible by 5 **and** odd. Thus, $C \cap D = \{5, 15\}$ and $P(C \cap D) = \frac{1}{10}$. Notice that $P(C) * P(D) = \frac{1}{10} = P(C \cap D)$, thus C and D are independent events. 
 
 ## Problem 2 <small>(2pts each, 14pts total)</small>
 
@@ -71,19 +76,19 @@ c. What the second hand reads on the clock when you wake up from a long nap (app
 
 d. How many people you need to swipe right on Tinder before you get a match. 
 
-**Answer**: Geometric
+**Answer**: I think that a Geometric RV would be good to model this situation. Here the RV would represent the number of failures (swipe rights) before you get a success (a match). In order for the Geometric model to work, we must make the assumption that each trial (person that you view on Tinder), is independent of previous trials. We must also assume that each trial has the same probability of a successful match. 
 
 e. The length of time between mosquito bites a camper experiences while on a hike. 
 
-**Answer**: Exponential
+**Answer**: I think that an Exponential RV would be good to model this situation. The RV would model the waiting time that occurs between each mosquito bite (event) during a the period of time that a camper is on a hike. In order for this model to work we must assume that there is a rate lambda that represents the expected wait time between bites and that an occurrence of a single bite is not dependent on previous bites.  
 
 f. Whether the Eagles win the Superbowl this year. 
 
-**Answer**: Bernoulli
+**Answer**: I think that a Bernoulli RV would be a good way to model this situation. This is because Bernoulli RV's deal with 1 trial where there are only two outcomes. Here our single trial would be the Superbowl game and the outcomes are either that the Eagles win or they don't. We must assume that there exists some p that represents the probability that the Eagles do win the Superbowl this year. 
 
 g. The GPA of a randomly selected UW-Madison graduate.
 
-**Answer**: Uniform (Continuous)
+**Answer**: I think that a Continuous Uniform RV would work well for modeling this situation. This is because there is a closed continuous interval possible of GPAs that a random UW-Madison graduate could have: [0, 4]. For this model to be accurate we must assume that the density is constant for each outcome. Using the interval [0,4], the constant density would be $\frac{1}{4}$. I could also see the argument for using a Normal RV to model this situation, however the outcome space of a Normal RV is $(-\infty, \infty)$. GPA can only between 0 and 4, so a Normal RV wouldn't technically work.  
 
 
 ## Problem 3 <small>(2pts each, 4pts total)</small>
@@ -130,6 +135,10 @@ b. What is $Pr[1.5 < X < 2.5]$
 ```{r}
 7/16
 ```
+
+
+**Answer**: $Pr[1.5 < X < 2.5] = 0.4375$
+
 
 
 **Answer**: $Pr[1.5 < X < 2.5] = 0.4375$
